@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background: url('https://img.freepik.com/free-vector/abstract-medical-wallpaper-template-design_53876-61806.jpg?size=626&ext=jpg&ga=GA1.1.490219006.1682486572&semt=ais') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-color: #f5f5f5;
+    }
+    .right-image {
+        flex: 0;
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-image img {
+        width: 200px;
+    height: 200px;
+        border-radius: 10px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 50px auto;
+        max-width: 800px;
+        padding: 30px;
+    }
+
+    .form-container {
+        flex: 1;
+        margin-right: 20px;
+    }
+
+    h2 {
+        color: #333333;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    label {
+        color: #555555;
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        text-align: left;
+    }
+
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #cccccc;
+    }
+
+    input[type="submit"] {
+        background-color: #4c74af;
+        border: none;
+        border-radius: 5px;
+        color: #ffffff;
+        cursor: pointer;
+        padding: 10px 20px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    #output {
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    #loading {
+        display: none;
+    }
+
+    .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .recommendations-container {
+        flex: 1;
+        margin-left: 150px;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .recent-recommendations {
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .recent-recommendations h3 {
+        color: #333333;
+        font-size: 16px;
+        margin: 0 0 10px;
+    }
+
+    .recent-recommendations ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .recent-recommendations li {
+        margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2>Disease Specific Diet Recommendation</h2>
+      <p>Select your Disease</p>
+      <form id="dietForm" action="/diseaseprediction" method="POST">
+        
+        <label for="Disease">Disease:</label>
+        <select id="Disease" name="Disease" required>
+          <option value="Diabetes">Diabetes</option>
+          <option value="Liver">Liver</option>
+          <option value="Heart">Heart</option>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
+      <div id="output"></div>
+      <br>
+      <div id="loading">
+        <div class="loading-spinner"></div>
+        <p>Generating Recipes...</p>
+      </div>
+    </div>
+
+    <div class="right-image">
+      <img src="https://img.freepik.com/free-photo/gmo-modified-sweet-bell-pepper-apple_23-2148747345.jpg?size=626&ext=jpg&ga=GA1.1.490219006.1682486572&semt=ais" alt="Image">
+    </div>
+  </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("dietForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  var disease = document.getElementById("Disease").value;
+
+  // Set recommended nutritional preferences based on disease
+  var recommendedPreferences;
+  if (disease === 'Diabetes') {
+    recommendedPreferences = {
+      calories: 1800,
+      fatContent: 40,
+      saturatedFatContent: 10,
+      cholesterolContent: 300,
+      sodiumContent: 2300,
+      carbohydrateContent: 150,
+      fiberContent: 25,
+      sugarContent: 30,
+      proteinContent: 50
+    };
+    var recommendedPreferences1=[1800,40,10,300,2300,150,25,30,50];
+  } else if (disease === 'Liver') {
+    recommendedPreferences = {
+      calories: 2000,
+      fatContent: 50,
+      saturatedFatContent: 15,
+      cholesterolContent: 300,
+      sodiumContent: 2000,
+      carbohydrateContent: 180,
+      fiberContent: 30,
+      sugarContent: 40,
+      proteinContent: 60
+    };
+    var recommendedPreferences1=[2000,50,15,300,2000,180,30,40,60];
+  } else if (disease === 'Heart') {
+    recommendedPreferences = {
+      calories: 1800,
+      fatContent: 40,
+      saturatedFatContent: 10,
+      cholesterolContent: 300,
+      sodiumContent: 2300,
+      carbohydrateContent: 150,
+      fiberContent: 25,
+      sugarContent: 30,
+      proteinContent: 50
+    };
+    var recommendedPreferences1=[1800,40,10,300,2300,150,25,30,50];
+  }
+
+  // Add recommended nutritional preferences to the form
+  var preferencesInput = document.createElement("input");
+  preferencesInput.type = "hidden";
+  preferencesInput.name = "recommendedPreferences";
+  preferencesInput.value = JSON.stringify(recommendedPreferences1);
+  document.getElementById("dietForm").appendChild(preferencesInput);
+
+  // Set chosen ingredients based on disease
+  var ingredients;
+  if (disease === 'Diabetes') {
+    ingredients = ['cinnamon', 'fenugreek', 'garlic', 'turmeric', 'rice', 'tortilla'];
+  } else if (disease === 'Liver') {
+    ingredients = ['broccoli', 'Brussels sprouts', 'cabbage', 'kale', 'cauliflower', 'blueberries', 'cranberries'];
+  } else if (disease === 'Heart') {
+    ingredients = ['Salmon', 'Oats', 'Spinach', 'Avocado', 'Blueberries', 'Walnuts', 'Olive oil', 'Flaxseeds', 'Broccoli'];
+  }
+
+  // Randomly choose 2 ingredients
+  var chosenIngredients = [];
+  for (var i = 0; i < 2; i++) {
+    var randomIndex = Math.floor(Math.random() * ingredients.length);
+    chosenIngredients.push(ingredients[randomIndex]);
+    ingredients.splice(randomIndex, 1);
+  }
+
+  // Add chosen ingredients to the form
+  var chosenIngredientsInput = document.createElement("input");
+  chosenIngredientsInput.type = "hidden";
+  chosenIngredientsInput.name = "chosenIngredients";
+  chosenIngredientsInput.value = JSON.stringify(chosenIngredients);
+  document.getElementById("dietForm").appendChild(chosenIngredientsInput);
+
+  var output = document.getElementById('output');
+  output.innerHTML = "<h3>Chosen Ingredients are:</h3>";
+chosenIngredients.forEach(function(ingredient) {
+  output.innerHTML += "<p>" + ingredient + "</p>";
+});
+
+  // Show loading spinner and message
+  var loading = document.getElementById("loading");
+  loading.style.display = "block";
+
+  // Submit the form
+  setTimeout(function() {
+    document.getElementById("dietForm").submit();
+  }, 1000);
+});
+
+  </script>
+</body>
+</html>

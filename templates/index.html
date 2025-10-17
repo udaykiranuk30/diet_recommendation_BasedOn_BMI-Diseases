@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://img.freepik.com/premium-photo/healthy-food-background-autumn-fresh-vegetables-dark-stone-table-with-copy-space-top-view_127032-1954.jpg?w=1060') no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            background-color: #f5f5f5;
+        }
+
+
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 800px;
+    padding: 30px;
+  }
+
+  h2 {
+    color: #333333;
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  label {
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: left;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+  }
+
+  input[type="submit"] {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  #output {
+    margin-top: 30px;
+    text-align: left;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  #loading {
+    display: none;
+  }
+
+  .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .recommendations-container {
+    flex: 1;
+    margin-left: 150px;
+  }
+  @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+  .recent-recommendations {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .recent-recommendations h3 {
+    color: #333333;
+    font-size: 16px;
+    margin: 0 0 10px;
+  }
+
+  .recent-recommendations ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .recent-recommendations li {
+    margin-bottom: 15px;
+  }
+</style>
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2>Diet Recommendation</h2>
+      <form id="dietForm" action="/generated" method="POST">
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" name="height" required>
+
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" name="weight" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+
+        <label for="activityLevel">Activity Level:</label>
+        <select id="activityLevel" name="activityLevel" required>
+          <option value="1.2">Sedentary</option>
+          <option value="1.375">Lightly Active</option>
+          <option value="1.55">Moderately Active</option>
+          <option value="1.725">Very Active</option>
+          <option value="1.9">Extremely Active</option>
+        </select>
+
+        <input type="submit" value="Submit">
+      </form>
+
+      <div id="output"></div>
+      <br>
+      <div id="loading">
+        <div class="loading-spinner"></div>
+        <p>Generating Recipes...</p>
+      </div>
+    </div>
+
+    <div class="recommendations-container">
+      <div class="recent-recommendations">
+        <h3>Recent Recommendations</h3>
+        <ul id="recentRecommendations"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("dietForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var height = parseFloat(document.getElementById("height").value);
+      var weight = parseFloat(document.getElementById("weight").value);
+      var age = parseInt(document.getElementById("age").value);
+      var gender = document.getElementById("gender").value;
+      var activityLevel = parseFloat(document.getElementById("activityLevel").value);
+
+      // Calculate BMI
+      var bmi = weight / Math.pow(height / 100, 2);
+      var bmiText = "Your BMI is " + bmi.toFixed(2);
+
+      // Calculate calorie intake
+      var bmr = gender === "M" ? 88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age) : 447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age);
+      var calorieIntake = bmr * activityLevel;
+      var calorieIntakeText = "Your daily calorie intake should be " + calorieIntake.toFixed(2) + " calories";
+
+      // Display results
+      var output = document.getElementById("output");
+      output.innerHTML = "<p>" + bmiText + "</p><p>" + calorieIntakeText + "</p>";
+
+      // Set chosen ingredients randomly
+      var chosenIngredients = [];
+      var ingredients = ['rice', 'eggs', 'beans', 'bananas', 'apples', 'carrots', 'oats', 'chicken', 'yogurt', 'spinach', 'berries', 'nuts', 'brown rice', 'salmon', 'sweet potato', 'quinoa', 'tomatoes', 'bell peppers', 'kale', 'tofu', 'broccoli', 'mushrooms', 'cauliflower', 'garlic'];
+
+      // Randomly choose 2 ingredients
+      for (var i = 0; i < 2; i++) {
+        var randomIndex = Math.floor(Math.random() * ingredients.length);
+        chosenIngredients.push(ingredients[randomIndex]);
+        ingredients.splice(randomIndex, 1);
+      }
+
+      // Add chosen ingredients to the form
+      var chosenIngredientsInput = document.createElement("input");
+      chosenIngredientsInput.type = "hidden";
+      chosenIngredientsInput.name = "chosenIngredients";
+      chosenIngredientsInput.value = JSON.stringify(chosenIngredients);
+      document.getElementById("dietForm").appendChild(chosenIngredientsInput);
+
+      // Show loading spinner and message
+      var loading = document.getElementById("loading");
+      loading.style.display = "block";
+
+      // Submit the form
+      setTimeout(function() {
+        document.getElementById("dietForm").submit();
+      }, 1000);
+    });
+// ...
+
+  // Fetch data and populate recent recommendations
+fetch("http://localhost:3000/data")
+  .then(response => response.json())
+  .then(data => {
+    var recentRecommendations = document.getElementById("recentRecommendations");
+
+    // Clear existing recommendations
+    recentRecommendations.innerHTML = "";
+
+    // Add fetched recommendations
+    data.forEach(item => {
+      var recipes = item.recommended_recipes;
+      var userDetails = item.user_details;
+
+      var li = document.createElement("li");
+
+      var userText = `Age: ${userDetails.age}, Gender: ${userDetails.gender}, Height: ${userDetails.height}, Weight: ${userDetails.weight}`;
+      var recipesText = `Recipes: ${recipes.join(", ")}`;
+
+      li.textContent = `${userText}. ${recipesText}`;
+      recentRecommendations.appendChild(li);
+    });
+  })
+  .catch(error => {
+    console.log("Error fetching data:", error);
+  });
+  </script>
+</body>
+</html>

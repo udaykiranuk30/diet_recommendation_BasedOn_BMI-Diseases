@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-image: url('https://img.freepik.com/premium-vector/geometric-dark-message-board-wallpaper-with-copy-space-modern-designs_796268-127.jpg?size=626&ext=jpg&ga=GA1.1.490219006.1682486572&semt=ais');
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    h1 {
+      font-size: 40px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin-bottom: 50px;
+    }
+
+    .quote-container {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .quote {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    .button-container button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 20px;
+      background-color: transparent;
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button-container button:hover {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .news-container {
+      margin-top: 50px;
+      text-align: left;
+      max-width: 500px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 5px;
+    }
+
+    .news-item {
+      margin-bottom: 10px;
+    }
+
+    .news-title {
+      font-weight: bold;
+    }
+
+    .news-description {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Diet Recommendation System</h1>
+    <div class="quote-container">
+      <p class="quote" id="quote"></p>
+    </div>
+    <div class="button-container">
+        <button onclick="location.href='http://localhost:5000/dietrecommend'">Diet Recommendation</button>
+        <br>
+        <button onclick="location.href='http://localhost:5000/disease'">Disease Specific Diet</button>
+        
+    </div>
+  </div>
+
+  <script>
+    // Random quotes
+    var quotes = [
+      "Your diet is a bank account. Good food choices are good investments.",
+      "Take care of your body. It's the only place you have to live.",
+      "The greatest wealth is health.",
+      "Let food be the medicine and medicine be the food.",
+      "A healthy outside starts from the inside.",
+      "Eat well, feel well, live well.",
+      "Your health is an investment, not an expense."
+    ];
+
+    var quoteElement = document.getElementById("quote");
+    var randomIndex = Math.floor(Math.random() * quotes.length);
+    quoteElement.innerHTML = quotes[randomIndex];
+
+   
+  </script>
+</body>
+</html>

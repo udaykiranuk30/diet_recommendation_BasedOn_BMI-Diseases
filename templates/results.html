@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Recipes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            background-color: #f5f5f5;
+            background-image: url("https://img.freepik.com/free-photo/crop-plate-with-salad_23-2147753678.jpg?size=626&ext=jpg&ga=GA1.1.490219006.1682486572&semt=ais");
+        }
+
+        h1 {
+            text-align: center;
+            color: #f2fbff;
+        }
+
+        .recipe {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .recipe:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .recipe h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .recipe-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+
+        .recipe-content {
+            flex-grow: 1;
+        }
+
+        .recipe h3 {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .recipe ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .recipe ul li {
+            display: inline;
+            margin-right: 5px;
+        }
+
+        .recipe p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .empty-placeholder {
+            font-style: italic;
+            color: #888;
+        }
+
+        .chosen-ingredients {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .chosen-ingredient {
+            width: calc(50% - 10px);
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generated Recipes</h1>
+    
+    <h3 style = "color:whitesmoke">Chosen Ingredients:</h3>
+    <div class="chosen-ingredients">
+        {% for ingredient in chosenIngredients %}
+            <div class="chosen-ingredient">
+                {{ ingredient }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <h3 style="color:whitesmoke">Generated Recipes:</h3>
+    <div>
+        {% if output_text %}
+            {{ output_text | safe }}
+        {% else %}
+            <p>No recipes found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

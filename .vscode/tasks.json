@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Start Server",
+        "command": "node",
+        "args": ["server.js"],
+        "type": "shell",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      },
+      {
+        "label": "Run Python Script",
+        "command": "python",
+        "args": ["-u", "c:/NewDiet/app.py"],
+        "type": "shell",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      },
+      {
+        "label": "Start Server and Run Python Script",
+        "dependsOrder": "sequence",
+        "dependsOn": ["Start Server", "Run Python Script"],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      }
+    ]
+  }
+  
