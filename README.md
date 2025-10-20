@@ -45,6 +45,6 @@ html5lib (optional, another parser for Beautiful Soup)
 
 <img width="567" height="390" alt="image" src="https://github.com/user-attachments/assets/bc4fc819-7eb6-493f-8061-71980e4455a5" />
 
-This was a Collaborative Project done along with my friends :) 
+The project was collaboratively made by Me, Bharath and Kesav
 
 
